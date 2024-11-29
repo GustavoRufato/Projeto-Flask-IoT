@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Gerenciador IoT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Font Awesome para ícones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="menu">
+        <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="#"><i class="fas fa-cogs"></i> Devices</a>
+        <a href="#"><i class="fas fa-layer-group"></i> Groups</a>
+        <a href="#"><i class="fas fa-users"></i> Users</a>
+        <a href="#"><i class="fas fa-plug"></i> Integrations</a>
+        <a href="#"><i class="fas fa-code-branch"></i> Webhooks</a>
+        <button class="config"><i class="fas fa-cog"></i></button>
+        <button class="info"><i class="fas fa-info-circle"></i></button>
+        <div class="perfil"><i class="fas fa-user"></i></div>
+    </nav>
+    <section class="controles">
+        <h3><i class="fas fa-sliders-h"></i> Controles</h3>
+        <a href="/tampa/fechar" class="fechar"><i class="fas fa-box"></i> Fechar Tampa</a>
+        <a href="/tampa/abrir" class="abrir"><i class="fas fa-box-open"></i> Abrir Tampa</a>
+    </section>
+    <section class="status">
+        <h4><i class="fas fa-trash"></i> Status da lixeira</h4>
+        <div style="display: flex;column-gap: 0.5rem;">
+            <span><i class="fas fa-check-circle"></i></span>
+            <p><i class="fas fa-check-circle"></i></p>
+        </div>
+        <button class="detalhes"><i class="fas fa-info"></i> Detalhes</button>
+    </section>
+    <section class="monitoramento">
+        <h3><i class="fas fa-chart-line"></i> Monitoramento em tempo real</h3>
+        <input id="ocupacao" type="range" min="-50" max="50">
+        <p></p>
+        <span hidden>{{lixeira}}</span>
+
+    </section>
+    <section class="historico">
+        <h3><i class="fas fa-history"></i> Histórico</h3>
+        <input type="text" placeholder="Buscar por eventos">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col"><i class="fas fa-sensor"></i> Sensor</th>
+                    <th scope="col"><i class="fas fa-chart-bar"></i> Valor</th>
+                    <th scope="col"><i class="fas fa-lightbulb"></i> Status Led</th>
+                    <th scope="col"><i class="fas fa-tools"></i> Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Umidade</th>
+                    <td>
+                        <h5>Valor?</h5>
+                    </td>
+                    <td>
+                        <h5>{{ledRed}}</h5>
+                    </td>
+                    <td>
+                        {% if ledRed == 'LED vermelho ON' %}
+                        <a class="btn btn-primary" href="/led_vermelho/off" role="button"><i class="fas fa-toggle-off"></i> Desligar</a>
+                        {% else %}
+                        <a class="btn btn-primary" href="/led_vermelho/on" role="button"><i class="fas fa-toggle-on"></i> Ligar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Ocupação da Lixeira</th>
+                    <td>
+                      <h5><i class="fas fa-dumpster"></i> {{ lixeira }}</h5>  
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="../static/js/home.js"></script>
+</body>
+</html>
